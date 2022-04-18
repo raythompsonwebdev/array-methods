@@ -90,6 +90,7 @@ const User = document.querySelector('#User');
 const mapFuncRadio = document.getElementById('mapfunc');
 const filterFuncRadio = document.getElementById('filterfunc');
 const someFuncRadio = document.getElementById('somefunc');
+const everyFuncRadio = document.getElementById('everyfunc');
 
 formForm.addEventListener('submit', function (e) {
   e.preventDefault();
@@ -163,7 +164,7 @@ const filterFunc = (value) => {
 };
 
 // Some function
-const someFunc = (...value) => {
+const someFunc = (value) => {
   const test = [...value];
   const result = test.some((el) => {
     if (/\d/.test(el)) {
@@ -179,7 +180,7 @@ const someFunc = (...value) => {
 };
 
 // Every function
-const everyFunc = (...value) => {
+const everyFunc = (value) => {
   const test = [...value];
   const result = test.every((el) => {
     if (/\d/.test(el)) {
