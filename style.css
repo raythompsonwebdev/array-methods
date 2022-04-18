@@ -39,7 +39,7 @@ input[type='text'] {
 fieldset {
   display: block;
   height: auto;
-  background: red;
+  background: #00b4d8;
   margin: 2em auto;
 }
 legend {

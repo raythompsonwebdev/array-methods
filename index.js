@@ -2,23 +2,21 @@
 import './style.css';
 
 // Write Javascript code!
-// Write Javascript code!
 const appDiv = document.getElementById('app');
 
-// Create a title dynamically
 const title = document.createElement('H1');
-title.innerText = 'Submit Here';
+title.innerText = 'Enter text here';
 
-// Create a title dynamically
+// display result
 const Answer = document.createElement('H2');
 Answer.setAttribute('id', 'User');
 Answer.innerText = '';
 
-// Create a form dynamically
+// Create a form
 const form = document.createElement('FORM');
 form.setAttribute('id', 'myform');
 
-// Create an input element for Full Name
+// Create an input element
 const FN = document.createElement('input');
 FN.setAttribute('id', 'text');
 FN.setAttribute('type', 'text');
@@ -60,9 +58,10 @@ const somefunclabel = document.createElement('label');
 somefunclabel.setAttribute('for', 'somefunc');
 somefunclabel.innerText = 'Some';
 
+// radio buttons feildset + legend
 const radioset = document.createElement('fieldset');
 const radiosetlegend = document.createElement('legend');
-radiosetlegend.innerText = '';
+radiosetlegend.innerText = 'Choose a Function and see result';
 
 // create a submit button
 const submitBtn = document.createElement('input');
@@ -72,7 +71,6 @@ submitBtn.setAttribute('value', 'Submit');
 form.appendChild(title);
 form.appendChild(FN);
 form.appendChild(radioset);
-
 radioset.appendChild(radiosetlegend);
 radioset.appendChild(mapfunclabel);
 mapfunclabel.appendChild(mapfunc);
@@ -84,13 +82,11 @@ radioset.appendChild(somefunclabel);
 somefunclabel.appendChild(somefunc);
 
 form.appendChild(submitBtn);
-
 appDiv.appendChild(form);
 appDiv.appendChild(Answer);
 
 const formForm = document.querySelector('#myform');
 const User = document.querySelector('#User');
-
 const mapFuncRadio = document.getElementById('mapfunc');
 const filterFuncRadio = document.getElementById('filterfunc');
 const someFuncRadio = document.getElementById('somefunc');
@@ -103,52 +99,55 @@ formForm.addEventListener('submit', function (e) {
   const formData = new FormData(formForm);
   // deconstruct form data object
   const data = formData;
-
   //convert object to array and map over values
   const Info = Array.from(data).map((elem) => {
     //decontruct object and get value of form input
     const [name, value] = elem;
-    //assign value to empty variable
+    //return value and store in Info variable.
     return value;
   });
 
+  //deconstruct info const - assign input value & radio button value
   const [val1, val2] = [...Info];
 
   console.log(val2, val1, mapFuncRadio.checked);
 
+  //check if map checkbox checked. If so apply map function to input value
   if (mapFuncRadio.checked) {
     answer(val1, mapFunc);
   }
-
+  //check if filter checkbox checked. If so apply filter function to input value
   if (filterFuncRadio.checked) {
     answer(val1, filterFunc);
   }
-
+  //check if some checkbox checked. If so apply some function to input value
   if (someFuncRadio.checked) {
     answer(val1, someFunc);
   }
-
+  //check if every checkbox checked. If so apply every function to input value
   if (everyFuncRadio.checked) {
     answer(val1, everyFunc);
   }
 });
 
-// test if string contains at least on upper and lowercase letter.
+// Map function
 const mapFunc = (...value) => {
   const test = [...value];
   const result = test.map((el) => {
+    // test if string contains number.
     if (/\d/.test(el)) {
+      // if so convert value from string to number using + operator.
       return +el * 2;
     } else {
+      // if not return string.
       return el.toUpperCase();
     }
   });
 
-  console.log('2: ' + result);
-  return result;
-  //return result === Number ? result : result.join('');
+  //return value as string
+  return result.join('');
 };
-// test if string contains at least two numbers.
+// Filter function
 const filterFunc = (value) => {
   const test = [...value];
   const result = test.filter((el) => {
@@ -161,9 +160,9 @@ const filterFunc = (value) => {
 
   console.log(result);
   return result;
-  //return result === Number ? result : result.join('');
 };
-// test if string has more than five characters or not.
+
+// Some function
 const someFunc = (...value) => {
   const test = [...value];
   const result = test.some((el) => {
@@ -178,6 +177,8 @@ const someFunc = (...value) => {
   return result;
   //return result === Number ? result : result.join('');
 };
+
+// Every function
 const everyFunc = (...value) => {
   const test = [...value];
   const result = test.every((el) => {
@@ -198,19 +199,14 @@ const hasNumber = (myString) => {
   return /\d/.test(myString);
 };
 
+//pass user input value and selected function as args then display returned value from selected function.
 const answer = (value, func) => {
+  // check if value has numbers using has number function.
   if (hasNumber(value)) {
+    //if so return numbers
     User.innerText = func(value);
   } else {
+    //return string
     User.innerText = func(value);
   }
 };
-
-// const radios = document.querySelectorAll('input[type="radio"]');
-
-// for (const radio of radios) {
-//   if (radio.id === 'mapfunc') {
-//     console.log('3: ' + radio.value);
-//     answer(radio.value, mapFunc);
-//   }
-// }
