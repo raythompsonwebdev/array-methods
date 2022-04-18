@@ -1,0 +1,87 @@
+h1,
+h2 {
+  font-family: Lato;
+}
+
+body {
+  background: #caf0f8;
+  font-family: Lato;
+}
+
+h1 {
+  text-align: center;
+  background: #03045e;
+  color: #fff;
+  line-height: 40px;
+  height: 40px;
+  font-size: 1.5em;
+  font-family: Lato;
+}
+
+form {
+  display: block;
+  margin: 0 auto;
+  background: #8a8bc5;
+  width: 90%;
+  padding: 0.25em;
+  border: solid #00b4d8 10px;
+}
+
+input[type='text'] {
+  width: 90%;
+  line-height: 35px;
+  display: block;
+  margin: 0 auto;
+  outline: none;
+  font-size: 1.2em;
+}
+
+fieldset {
+  display: block;
+  height: auto;
+  background: red;
+  margin: 2em auto;
+}
+legend {
+  color: #000;
+  font-size: 1.2em;
+}
+
+label {
+  width: 25%;
+  background: #fff;
+  display: block;
+  text-align: center;
+  line-height: 35px;
+  color: #000;
+  float: left;
+}
+
+input[type='radio'] {
+  width: 20%;
+  background: #fff;
+  display: inline-block;
+}
+
+input[type='submit'] {
+  display: block;
+  margin: 1em auto;
+  padding: 0.5em 1em;
+  width: 60%;
+  font-size: 1.2em;
+  outline: none;
+  border: none;
+  background: #90e0ef;
+  text-transform: uppercase;
+}
+
+input[type='submit']:hover {
+  cursor: pointer;
+  background-color: #000;
+  color: #fff;
+}
+
+h2 {
+  font-size: 2em;
+  text-align: center;
+}
