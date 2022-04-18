@@ -28,7 +28,7 @@ FN.setAttribute('name', 'tester');
 const mapfunc = document.createElement('input');
 mapfunc.setAttribute('id', 'mapfunc');
 mapfunc.setAttribute('type', 'radio');
-mapfunc.setAttribute('name', 'mapfunc');
+mapfunc.setAttribute('name', 'arrayfunc');
 const mapfunclabel = document.createElement('label');
 mapfunclabel.setAttribute('for', 'mapfunc');
 mapfunclabel.innerText = 'Map';
@@ -37,7 +37,7 @@ mapfunclabel.innerText = 'Map';
 const filterfunc = document.createElement('input');
 filterfunc.setAttribute('id', 'filterfunc');
 filterfunc.setAttribute('type', 'radio');
-filterfunc.setAttribute('name', 'filterfunc');
+filterfunc.setAttribute('name', 'arrayfunc');
 const filterfunclabel = document.createElement('label');
 filterfunclabel.setAttribute('for', 'filterfunc');
 filterfunclabel.innerText = 'Filter';
@@ -46,7 +46,7 @@ filterfunclabel.innerText = 'Filter';
 const everyfunc = document.createElement('input');
 everyfunc.setAttribute('id', 'everyfunc');
 everyfunc.setAttribute('type', 'radio');
-everyfunc.setAttribute('name', 'everyfunc');
+everyfunc.setAttribute('name', 'arrayfunc');
 const everyfunclabel = document.createElement('label');
 everyfunclabel.setAttribute('for', 'everyfunc');
 everyfunclabel.innerText = 'Every';
@@ -55,7 +55,7 @@ everyfunclabel.innerText = 'Every';
 const somefunc = document.createElement('input');
 somefunc.setAttribute('id', 'somefunc');
 somefunc.setAttribute('type', 'radio');
-somefunc.setAttribute('name', 'somefunc');
+somefunc.setAttribute('name', 'arrayfunc');
 const somefunclabel = document.createElement('label');
 somefunclabel.setAttribute('for', 'somefunc');
 somefunclabel.innerText = 'Some';
@@ -91,9 +91,9 @@ appDiv.appendChild(Answer);
 const formForm = document.querySelector('#myform');
 const User = document.querySelector('#User');
 
-const mapFuncRadio = document.getElementById('mapfunc').checked;
-const filterFuncRadio = document.getElementById('filterfunc').checked;
-const someFuncRadio = document.getElementById('somefunc').checked;
+const mapFuncRadio = document.getElementById('mapfunc');
+const filterFuncRadio = document.getElementById('filterfunc');
+const someFuncRadio = document.getElementById('somefunc');
 
 formForm.addEventListener('submit', function (e) {
   e.preventDefault();
@@ -101,45 +101,40 @@ formForm.addEventListener('submit', function (e) {
   let valueP = ' ';
   //get form data to get input value.
   const formData = new FormData(formForm);
-
   // deconstruct form data object
   const data = formData;
 
-  // check if string contains numbers
-  const hasNumber = (myString) => {
-    return /\d/.test(myString);
-  };
   //convert object to array and map over values
-  Array.from(data).forEach((elem) => {
+  const Info = Array.from(data).map((elem) => {
     //decontruct object and get value of form input
     const [name, value] = elem;
     //assign value to empty variable
-    valueP = value;
+    return value;
   });
 
-  if (mapFuncRadio) {
-    return hasNumber(valueP)
-      ? (User.innerText = mapFunc(valueP))
-      : (User.innerText = mapFunc(valueP));
+  const [val1, val2] = [...Info];
+
+  console.log(val2, val1, mapFuncRadio.checked);
+
+  if (mapFuncRadio.checked) {
+    answer(val1, mapFunc);
   }
 
-  if (filterFuncRadio) {
-    return hasNumber(valueP)
-      ? (User.innerText = filterFunc(valueP))
-      : (User.innerText = filterFunc(valueP));
+  if (filterFuncRadio.checked) {
+    answer(val1, filterFunc);
   }
 
-  // if (hasNumber(valueP)) {
-  //   //User.innerText = mapFunc(valueP);
-  //   User.innerText = filterFunc(valueP);
-  // } else {
-  //   //User.innerText = mapFunc(valueP);
-  //   User.innerText = filterFunc(valueP);
-  // }
+  if (someFuncRadio.checked) {
+    answer(val1, someFunc);
+  }
+
+  if (everyFuncRadio.checked) {
+    answer(val1, everyFunc);
+  }
 });
 
 // test if string contains at least on upper and lowercase letter.
-const mapFunc = (value) => {
+const mapFunc = (...value) => {
   const test = [...value];
   const result = test.map((el) => {
     if (/\d/.test(el)) {
@@ -149,11 +144,10 @@ const mapFunc = (value) => {
     }
   });
 
-  console.log(result);
+  console.log('2: ' + result);
   return result;
   //return result === Number ? result : result.join('');
 };
-
 // test if string contains at least two numbers.
 const filterFunc = (value) => {
   const test = [...value];
@@ -169,9 +163,8 @@ const filterFunc = (value) => {
   return result;
   //return result === Number ? result : result.join('');
 };
-
 // test if string has more than five characters or not.
-const someFunc = (value) => {
+const someFunc = (...value) => {
   const test = [...value];
   const result = test.some((el) => {
     if (/\d/.test(el)) {
@@ -185,5 +178,39 @@ const someFunc = (value) => {
   return result;
   //return result === Number ? result : result.join('');
 };
+const everyFunc = (...value) => {
+  const test = [...value];
+  const result = test.every((el) => {
+    if (/\d/.test(el)) {
+      return +el > 2;
+    } else {
+      return el === 'a';
+    }
+  });
 
-const every = (value) => {};
+  console.log(result);
+  return result;
+  //return result === Number ? result : result.join('');
+};
+
+// check if string contains numbers
+const hasNumber = (myString) => {
+  return /\d/.test(myString);
+};
+
+const answer = (value, func) => {
+  if (hasNumber(value)) {
+    User.innerText = func(value);
+  } else {
+    User.innerText = func(value);
+  }
+};
+
+// const radios = document.querySelectorAll('input[type="radio"]');
+
+// for (const radio of radios) {
+//   if (radio.id === 'mapfunc') {
+//     console.log('3: ' + radio.value);
+//     answer(radio.value, mapFunc);
+//   }
+// }
